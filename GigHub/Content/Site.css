@@ -23,6 +23,12 @@ textarea {
     max-width: 280px;
 }
 
+
+.field-validation-error {
+    font-weight: bold;
+    color: #ff0000;
+}
+
 /* Bootstrap Overrides */
 .navbar-brand {
     font-weight: 700;
