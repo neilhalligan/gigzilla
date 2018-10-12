@@ -206,6 +206,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttendancesController.cs" />
+    <Compile Include="Controllers\FollowingDto.cs" />
+    <Compile Include="Controllers\FollowingsController.cs" />
     <Compile Include="Controllers\GigsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -240,10 +242,23 @@
     <Compile Include="Migrations\201810120909176_AddAttendances.Designer.cs">
       <DependentUpon>201810120909176_AddAttendances.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810121410488_AddFollowModel.cs" />
+    <Compile Include="Migrations\201810121410488_AddFollowModel.Designer.cs">
+      <DependentUpon>201810121410488_AddFollowModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810121458320_UpdatedRelationshipNaming.cs" />
+    <Compile Include="Migrations\201810121458320_UpdatedRelationshipNaming.Designer.cs">
+      <DependentUpon>201810121458320_UpdatedRelationshipNaming.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810121528262_FixFollowingsInAppDbContext.cs" />
+    <Compile Include="Migrations\201810121528262_FixFollowingsInAppDbContext.Designer.cs">
+      <DependentUpon>201810121528262_FixFollowingsInAppDbContext.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Attendance.cs" />
+    <Compile Include="Models\Following.cs" />
     <Compile Include="Models\FutureDate.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Gig.cs" />
@@ -352,6 +367,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810120909176_AddAttendances.resx">
       <DependentUpon>201810120909176_AddAttendances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810121410488_AddFollowModel.resx">
+      <DependentUpon>201810121410488_AddFollowModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810121458320_UpdatedRelationshipNaming.resx">
+      <DependentUpon>201810121458320_UpdatedRelationshipNaming.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810121528262_FixFollowingsInAppDbContext.resx">
+      <DependentUpon>201810121528262_FixFollowingsInAppDbContext.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

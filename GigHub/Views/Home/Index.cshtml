@@ -29,6 +29,12 @@
                     >   
                         Going ?
                     </button>
+                    <button 
+                        class="btn btn-default btn-sm pull-right js-toggle-follow"
+                        data-followee-id="@gig.ArtistId"
+                    >   
+                        Follow ?
+                    </button>
                 </div>
             </li>
         }
@@ -49,12 +55,27 @@
                                 .removeClass("btn-default")
                                 .addClass("btn-info")
                                 .text("Going");
-
                         })
                         .fail(() => {
                             alert("Something Failed!");
                         });
                 });
+
+            $(".js-toggle-follow").click(e => {
+                var button = $(e.target);
+                $.post("/api/followings", { FolloweeId: button.attr("data-followee-id") })
+                    .done(() => {
+                        button
+                            .removeClass("btn-default")
+                            .addClass("btn-info")
+                            .text("Following");
+                    })
+                    .fail(() => {
+                        alert("Something Failed!");
+                    });
+            });
         });
+
+
     </script>
 }
