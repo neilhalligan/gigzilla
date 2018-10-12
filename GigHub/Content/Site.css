@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 90px;
     padding-bottom: 20px;
 }
 
@@ -85,4 +85,52 @@ body,
     font-size: 17px;
     -ms-border-radius: 9px;
     border-radius: 9px;
+}
+
+/* Page Level Styles*/
+
+.gig {
+    list-style: none;
+}
+
+.gig > li {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.gig > li > .date {
+    background: red;
+    color: white;
+    width: 60px;
+    -ms-border-radius: 8px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.gig > li .date .month {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px 6px;
+}
+
+.gig > li .date .day {
+    font-size: 20px;
+    background: #f7f7f7;
+    color: #333;
+    padding: 6px 12px;
+}
+
+.gig > li .details {
+    position: absolute;
+    left: 70px;
+}
+
+.gig > li .details .artist {
+    font-weight: bold;
+}
+
+.gig > li .details .genre {
+    font-size: 15px;
+    display: block;
 }
