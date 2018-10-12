@@ -81,8 +81,8 @@ body,
 }
 
 .btn {
-    padding: 8px 20px;
-    font-size: 17px;
+    /*padding: 8px 20px;
+    font-size: 17px;*/
     -ms-border-radius: 9px;
     border-radius: 9px;
 }

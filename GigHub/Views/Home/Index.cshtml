@@ -15,7 +15,7 @@
                     <div class="day">
                         @gig.DateTime.ToString("d ")
                     </div>
-                    </div>
+                </div>
                 <div class="details">
                     <span class="artist">
                         @gig.Artist.Name
@@ -23,9 +23,38 @@
                     <span class="genre">
                         @gig.Genre.Name
                     </span>
+                    <button 
+                        class="btn btn-default btn-sm pull-right js-toggle-attendance"
+                        data-gig-id="@gig.Id"
+                    >   
+                        Going ?
+                    </button>
                 </div>
             </li>
         }
 
     </ul>
 </div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(() => {
+            $(".js-toggle-attendance")
+                .click(e => {
+                    var button = $(e.target);
+                    $.post("/api/attendances", {GigId: button.attr("data-gig-id")})
+                        .done(() => {
+                            button
+                                .removeClass("btn-default")
+                                .addClass("btn-info")
+                                .text("Going");
+
+                        })
+                        .fail(() => {
+                            alert("Something Failed!");
+                        });
+                });
+        });
+    </script>
+}
