@@ -73,7 +73,7 @@ body,
 }
 
 .form-control {
-    padding: 20px 12px;
+    height: 44px;
     font-size: 17px;
     -ms-border-radius: 9px;
     border-radius: 9px
@@ -86,8 +86,6 @@ body,
 }
 
 .btn {
-    /*padding: 8px 20px;
-    font-size: 17px;*/
     -ms-border-radius: 9px;
     border-radius: 9px;
 }
@@ -138,5 +136,14 @@ body,
 
 .gig > li .details .genre {
     font-size: 15px;
+    display: block;
+}
+
+.gig > li .actions {
+    font-size: 15px;
+    display: none;
+}
+
+.gig > li:hover .actions {
     display: block;
 }
