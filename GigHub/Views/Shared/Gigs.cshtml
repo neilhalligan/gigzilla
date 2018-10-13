@@ -1,46 +1,51 @@
-﻿@model IEnumerable<GigHub.Models.Gig>
+﻿@model GigHub.ViewModels.GigsViewModel
 @{
     ViewBag.Title = "Home Page";
 }
-
-<div>
-    <ul class="gig">
-        @foreach (var gig in Model)
-        {
-            <li>
-                <div class="date">
-                    <div class="month">
-                        @gig.DateTime.ToString("MMM")
-                    </div>
-                    <div class="day">
-                        @gig.DateTime.ToString("d ")
-                    </div>
+<h1>@Model.Heading</h1>
+<ul class="gig voffset4">
+    @foreach (var gig in Model.UpcomingGigs)
+    {
+         <li>
+             <div class="date">
+                <div class="month">
+                    @gig.DateTime.ToString("MMM")
                 </div>
-                <div class="details">
-                    <span class="artist">
-                        @gig.Artist.Name
-                    </span>
-                    <span class="genre">
-                        @gig.Genre.Name
-                    </span>
-                    <button 
+                <div class="day">
+                    @gig.DateTime.ToString("d ")
+                </div>
+            </div>
+            <div class="details">
+                <span class="artist">
+                    @gig.Artist.Name
+                </span>
+                <span class="genre">
+                    @gig.Genre.Name
+                </span>
+                @if (Model.ShowActions)
+                {
+                    <button
                         class="btn btn-default btn-sm pull-right js-toggle-attendance"
                         data-gig-id="@gig.Id"
-                    >   
+                    >
                         Going ?
                     </button>
+                }
+                @if (Model.ShowActions)
+                {
                     <button 
                         class="btn btn-default btn-sm pull-right js-toggle-follow"
                         data-followee-id="@gig.ArtistId"
                     >   
                         Follow ?
                     </button>
-                </div>
-            </li>
-        }
+                }
+                          
+            </div>
+        </li>
+    }
 
-    </ul>
-</div>
+</ul>
 
 @section scripts
 {
