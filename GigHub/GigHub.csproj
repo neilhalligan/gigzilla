@@ -205,9 +205,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AttendancesController.cs" />
-    <Compile Include="Models\FollowingDto.cs" />
-    <Compile Include="Controllers\FollowingsController.cs" />
+    <Compile Include="Controllers\APIs\AttendancesController.cs" />
+    <Compile Include="Controllers\APIs\GigsController.cs" />
+    <Compile Include="Migrations\201810131424083_AddIsCancelledToGig.cs" />
+    <Compile Include="Migrations\201810131424083_AddIsCancelledToGig.Designer.cs">
+      <DependentUpon>201810131424083_AddIsCancelledToGig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DTOs\FollowingDto.cs" />
+    <Compile Include="Controllers\APIs\FollowingsController.cs" />
     <Compile Include="Controllers\GigsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -263,7 +268,7 @@
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Gig.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\AttendanceDto.cs" />
+    <Compile Include="DTOs\AttendanceDto.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ValidTime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -379,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810121528262_FixFollowingsInAppDbContext.resx">
       <DependentUpon>201810121528262_FixFollowingsInAppDbContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810131424083_AddIsCancelledToGig.resx">
+      <DependentUpon>201810131424083_AddIsCancelledToGig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
