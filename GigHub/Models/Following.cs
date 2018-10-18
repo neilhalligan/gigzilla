@@ -15,5 +15,22 @@ namespace GigHub.Models
         [Key]
         [Column(Order = 2)]
         public string FolloweeId { get; set; }
+
+        public bool IsCancelled { get; private set; }
+
+        protected Following()
+        {
+        }
+
+        public Following(string followerId, string followeeId)
+        {
+            FollowerId = followerId;
+            FolloweeId = followeeId;
+        }
+
+        public void ToggleFollow()
+        {
+            IsCancelled = !IsCancelled;
+        }
     }
 }

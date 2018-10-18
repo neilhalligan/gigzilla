@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -36,8 +37,75 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/lib")
+    @Scripts.Render("~/bundles/app")
     @RenderSection("scripts", required: false)
+<script type="text/x-template" id="notifications">
+    <ul class="notifications">
+        <% _.each(notifications, function(notification) { %>
+        <li>
+            <% if (notification.type == 1) { %>
+            <span class="highlight"><%= notification.gig.artist.name %></span> has cancelled the gig at <%= notification.gig.venue %> at <%= moment(notification.gig.dateTime).format("D MMM HH:mm") %>
+            <% } else if (notification.type == 2) {
+                var changes = [],
+                    oldValues = [],
+                    newValues = [];
+
+            if (notification.originalVenue !== notification.gig.venue) {
+                changes.push('venue');
+                oldValues.push(notification.originalVenue);
+                newValues.push(notification.gig.venue);
+                }
+            if (notification.originalDateTime !== notification.gig.dateTime) {
+                changes.push('date/time');
+                oldValues.push(moment(notification.originalDateTime).format("D MMM HH:mm"));
+                newValues.push(moment(notification.gig.dateTime).format("D MMM HH:mm"));
+                }
+            %>
+            <span class="highlight"><%= notification.gig.artist.name %></span> has changed the <%= changes.join(' and ') %> of the gig at <%= oldValues.join(' at ') %> to <%= newValues.join(' at ') %>
+            <% } %>
+        </li>
+        <% }); %>
+    </ul>
+    
+    
+</script>
+    <script>
+        $(document).ready(() => {
+            $.get("/api/notifications")
+                .done(notifications => {
+                    if (notifications.length === 0) {
+                        return;
+                    }
+                    $(".js-notifications-count")
+                        .text(notifications.length)
+                        .removeClass("hide")
+                        .addClass("animated bounceInDown");
+                    
+                    $('.notifications').popover({
+                        title: 'Notifications',
+                        html: true,
+                        content: () => {
+                            var compiled = _.template($('#notifications').html());
+                            return compiled({notifications: notifications});
+                        },
+                        placement: 'bottom',
+                        template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content popover-notifications"></div></div>'
+                    }).on("shown.bs.popover", () => {
+                        $.post("/api/notifications/")
+                            .done(() => {
+                                $(".js-notifications-count")
+                                    .addClass("hide");
+                            })
+                            .fail(() => {
+                                alert("Something Failed");
+                            });
+                    });
+                })
+                .fail(() => {
+                    alert("Something failed");
+                });
+        })
+    </script>
 </body>
 </html>

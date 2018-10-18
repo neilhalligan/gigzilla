@@ -22,21 +22,48 @@ namespace GigHub.Controllers.APIs
             var followeeId = dto.FolloweeId;
             var followerId = User.Identity.GetUserId();
 
-            var exists = _context.Follows
+            var follow = _context.Follows
                 .Any(f => f.FolloweeId == followeeId && f.FollowerId == followerId);
 
-            if (exists)
-                return BadRequest("Already following this artist!");
-
-            var following = new Following
+            if (follow)
             {
-                FollowerId = followerId,
-                FolloweeId = followeeId
-            };
+                return BadRequest("Follow already exists");
+            }
+
+            var following = new Following(followerId, followeeId);
 
             _context.Follows.Add(following);
             _context.SaveChanges();
             return Ok();
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Delete(string id)
+        {
+            var userId = User.Identity.GetUserId();
+            var follow = _context.Follows
+                .SingleOrDefault(f => f.FollowerId == userId && f.FolloweeId == id);
+
+            if (follow == null)
+                return BadRequest("Followee Id not found");
+
+            _context.Follows.Remove(follow);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpGet]
+        public bool isFollowing(string followeeId)
+        {
+            var userId = User.Identity.GetUserId();
+            var isFollowing = _context.Follows
+                .SingleOrDefault(f => f.FollowerId == userId && f.FolloweeId == followeeId);
+
+            if (isFollowing == null)
+                return false;
+
+            return true;
         }
     }
 }

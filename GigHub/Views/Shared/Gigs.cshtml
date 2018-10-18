@@ -3,7 +3,18 @@
     ViewBag.Title = "Home Page";
 }
 <h1>@Model.Heading</h1>
-<ul class="gig voffset4">
+@using (Html.BeginForm("Search", "Gigs"))
+{
+    <div class="form-group">
+        <div class="input-group" id="searchGigs">
+            @Html.TextBoxFor(m => m.SearchTerm, new {@class = "form-control", placeholder="Search by artist, genre..."})
+            <span class="input-group-addon" id="basic-addon2">
+                <i class="glyphicon glyphicon-search"></i>
+            </span>
+        </div>
+    </div>
+}
+<ul id="gigs" class="gig voffset4">
     @foreach (var gig in Model.UpcomingGigs)
     {
          <li>
@@ -17,8 +28,7 @@
             </div>
             <div class="details">
                 <span class="artist">
-                    @gig.Artist.Name
-                    
+                    <a href="@Url.Action("Detail", "Gigs", new { gigId = gig.Id })">@gig.Artist.Name</a>
                     @if (gig.IsCancelled)
                     {
                         <span class="label label-warning">Cancelled</span>
@@ -30,25 +40,16 @@
                 @if (Model.ShowActions && !gig.IsCancelled)
                 {
                     <button
-                        class="btn btn-default btn-sm pull-right js-toggle-attendance"
+                        class="btn @(Model.Attendances.Contains(gig.Id) ? "btn-info" : "btn-default") 
+                            btn-sm js-toggle-attendance"
                         data-gig-id="@gig.Id"
                     >
-                        Going ?
+                        @(Model.Attendances.Contains(gig.Id) ? "Going" : "Going ?")
                     </button>
                 }
-                @if (Model.ShowActions)
-                {
-                    <button 
-                        class="btn btn-default btn-sm pull-right js-toggle-follow"
-                        data-followee-id="@gig.ArtistId"
-                    >   
-                        Follow ?
-                    </button>
-                }
-                          
             </div>
         </li>
-    }
+        }
 
 </ul>
 
@@ -56,36 +57,7 @@
 {
     <script>
         $(document).ready(() => {
-            $(".js-toggle-attendance")
-                .click(e => {
-                    var button = $(e.target);
-                    $.post("/api/attendances", {GigId: button.attr("data-gig-id")})
-                        .done(() => {
-                            button
-                                .removeClass("btn-default")
-                                .addClass("btn-info")
-                                .text("Going");
-                        })
-                        .fail(() => {
-                            alert("Something Failed!");
-                        });
-                });
-
-            $(".js-toggle-follow").click(e => {
-                var button = $(e.target);
-                $.post("/api/followings", { FolloweeId: button.attr("data-followee-id") })
-                    .done(() => {
-                        button
-                            .removeClass("btn-default")
-                            .addClass("btn-info")
-                            .text("Following");
-                    })
-                    .fail(() => {
-                        alert("Something Failed!");
-                    });
-            });
+            GigsController.init("#gigs");
         });
-
-
     </script>
 }

@@ -35,6 +35,11 @@ textarea {
 .voffset4 { margin-top: 40px; }
 
 /* Bootstrap Overrides */
+.popover {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
 .navbar-brand {
     font-weight: 700;
 }
@@ -88,6 +93,11 @@ body,
 .btn {
     -ms-border-radius: 9px;
     border-radius: 9px;
+}
+
+.form-control {
+    -webkit-transition: none;
+    -o-transition: none;
 }
 
 /* Page Level Styles*/
@@ -146,4 +156,46 @@ body,
 
 .gig > li:hover .actions {
     display: block;
+}
+
+.notifications {
+    position: relative;
+}
+
+.notifications .badge {
+    top: 4px;
+    position: absolute;
+    left: 24px;
+    background-color: #a80a0a;
+}
+
+.notifications .glyphicon {
+    font-size: 15px;
+}
+
+.popover-notifications ul.notifications {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.popover-content.popover-notifications {
+    padding: 0;
+    width: 250px;
+}
+
+.popover-notifications ul.notifications > li {
+    border-bottom: #ddd 1px solid;
+    padding: 10px;
+}
+
+.popover-notifications ul.notifications > li:last-child {
+    border-bottom: none;
+}
+
+.popover-notifications ul.notifications .highlight {
+    font-weight: bold;
+}
+
+#searchGigs {
+    width: 300px;
 }

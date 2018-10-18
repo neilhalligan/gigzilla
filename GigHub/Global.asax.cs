@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using GigHub.DTOs;
+using GigHub.Models;
 
 namespace GigHub
 {
@@ -9,6 +11,7 @@ namespace GigHub
     {
         protected void Application_Start()
         {
+            AutoMapper.Mapper.Initialize(cfg => cfg.AddProfile<AutoMapperProfile>());
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
