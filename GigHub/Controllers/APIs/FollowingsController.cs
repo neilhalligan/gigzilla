@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Http;
-using GigHub.DTOs;
-using GigHub.Models;
+using GigHub.Core.DTOs;
+using GigHub.Core.Models;
 using Microsoft.AspNet.Identity;
 
 namespace GigHub.Controllers.APIs
@@ -22,7 +22,7 @@ namespace GigHub.Controllers.APIs
             var followeeId = dto.FolloweeId;
             var followerId = User.Identity.GetUserId();
 
-            var follow = _context.Follows
+            var follow = _context.Followings
                 .Any(f => f.FolloweeId == followeeId && f.FollowerId == followerId);
 
             if (follow)
@@ -32,7 +32,7 @@ namespace GigHub.Controllers.APIs
 
             var following = new Following(followerId, followeeId);
 
-            _context.Follows.Add(following);
+            _context.Followings.Add(following);
             _context.SaveChanges();
             return Ok();
         }
@@ -41,13 +41,13 @@ namespace GigHub.Controllers.APIs
         public IHttpActionResult Delete(string id)
         {
             var userId = User.Identity.GetUserId();
-            var follow = _context.Follows
+            var follow = _context.Followings
                 .SingleOrDefault(f => f.FollowerId == userId && f.FolloweeId == id);
 
             if (follow == null)
                 return BadRequest("Followee Id not found");
 
-            _context.Follows.Remove(follow);
+            _context.Followings.Remove(follow);
             _context.SaveChanges();
 
             return Ok();
@@ -57,7 +57,7 @@ namespace GigHub.Controllers.APIs
         public bool isFollowing(string followeeId)
         {
             var userId = User.Identity.GetUserId();
-            var isFollowing = _context.Follows
+            var isFollowing = _context.Followings
                 .SingleOrDefault(f => f.FollowerId == userId && f.FolloweeId == followeeId);
 
             if (isFollowing == null)

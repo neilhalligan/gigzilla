@@ -2,8 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using GigHub.DTOs;
-using GigHub.Models;
+using GigHub.Core.Models;
 
 namespace GigHub
 {

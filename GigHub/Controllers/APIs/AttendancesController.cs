@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Http;
-using GigHub.DTOs;
-using GigHub.Models;
+using GigHub.Core.DTOs;
+using GigHub.Core.Models;
 using Microsoft.AspNet.Identity;
 
 namespace GigHub.Controllers.APIs

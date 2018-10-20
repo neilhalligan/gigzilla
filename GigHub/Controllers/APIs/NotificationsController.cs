@@ -3,8 +3,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using AutoMapper.QueryableExtensions;
-using GigHub.DTOs;
-using GigHub.Models;
+using GigHub.Core.DTOs;
+using GigHub.Core.Models;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 
