@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using GigHub.App_Start;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -8,6 +9,7 @@ namespace GigHub
     {
         public static void Register(HttpConfiguration config)
         {
+            StructuremapWebApi.Start();
             var settings = GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             settings.Formatting = Formatting.Indented;

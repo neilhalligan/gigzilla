@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using GigHub.Core;
+﻿using GigHub.Core;
 using GigHub.Core.Models;
 using GigHub.Core.ViewModels;
-using GigHub.Persistance;
 using Microsoft.AspNet.Identity;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace GigHub.Controllers
 {
@@ -12,9 +11,9 @@ namespace GigHub.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public GigsController()
+        public GigsController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork(new ApplicationDbContext());
+            _unitOfWork = unitOfWork;
         }
 
         [Authorize]
@@ -37,10 +36,10 @@ namespace GigHub.Controllers
         }
 
         [Authorize]
-        public ActionResult Mine()
+        public ViewResult Mine()
         {
             var userId = User.Identity.GetUserId();
-            var gigs = _unitOfWork.Gigs.GetUpcomingGigsByArtistWithGenre(userId);
+            var gigs = _unitOfWork.Gigs.GetUpcomingGigsByArtist(userId);
 
             return View(gigs);
         }
@@ -130,7 +129,7 @@ namespace GigHub.Controllers
                 return View("GigForm", viewModel);
             }
 
-            var gig = _unitOfWork.Gigs.GetGigsWithAttendees(viewModel.Id);
+            var gig = _unitOfWork.Gigs.GetGigWithAttendees(viewModel.Id);
 
             if (gig == null)
                 return HttpNotFound();
@@ -161,7 +160,7 @@ namespace GigHub.Controllers
             var userId = User.Identity.GetUserId();
 
             bool userIsAttending = 
-                _unitOfWork.Attendances.GetAttendance(userId, gig) != null;
+                _unitOfWork.Attendances.GetAttendance(userId, gig.Id) != null;
 
             var viewModel = new GigDetailViewModel
             {

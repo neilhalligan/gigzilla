@@ -13,7 +13,7 @@ namespace GigHub.Controllers
     {
         private IUnitOfWork _unitOfWork;
 
-        public HomeController()
+        public HomeController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = new UnitOfWork(new ApplicationDbContext());
         }
@@ -22,7 +22,7 @@ namespace GigHub.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var upcomingGigs = _unitOfWork.Gigs.GetGigsUserAttending(userId);
+            var upcomingGigs = _unitOfWork.Gigs.GetUpcomingGigs();
 
             if (!IsNullOrEmpty(query))
             {

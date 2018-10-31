@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Http;
+using GigHub.Core;
 using GigHub.Core.DTOs;
 using GigHub.Core.Models;
 using Microsoft.AspNet.Identity;
@@ -9,11 +10,11 @@ namespace GigHub.Controllers.APIs
     [Authorize]
     public class AttendancesController : ApiController
     {
-        private ApplicationDbContext _context;
+        private IUnitOfWork _unitOfWork;
 
-        public AttendancesController()
+        public AttendancesController(IUnitOfWork unitOfWork)
         {
-            _context = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
@@ -22,10 +23,9 @@ namespace GigHub.Controllers.APIs
             var gigId = dto.GigId;
             var userId = User.Identity.GetUserId();
 
-            var exists = _context.Attendances
-                .Any(a => a.AttendeeId == userId && a.GigId == gigId);
+            var existingAttendance = _unitOfWork.Attendances.GetAttendance(userId, gigId);
 
-            if (exists)
+            if (existingAttendance != null)
                 return BadRequest("The attendance already exists");
 
             var attendance = new Attendance
@@ -34,8 +34,8 @@ namespace GigHub.Controllers.APIs
                 AttendeeId = userId
             };
 
-            _context.Attendances.Add(attendance);
-            _context.SaveChanges();
+            _unitOfWork.Attendances.Add(attendance);
+            _unitOfWork.Complete();
 
             return Ok();
         }
@@ -45,14 +45,13 @@ namespace GigHub.Controllers.APIs
         {
             var userId = User.Identity.GetUserId();
 
-            var attendance = _context.Attendances
-                .SingleOrDefault(a => a.GigId == id && a.AttendeeId == userId);
+            var attendance = _unitOfWork.Attendances.GetAttendance(userId, id);
 
             if (attendance == null)
                 return NotFound();
 
-            _context.Attendances.Remove(attendance);
-            _context.SaveChanges();
+            _unitOfWork.Attendances.Remove(attendance);
+            _unitOfWork.Complete();
 
             return Ok(id);
         }
