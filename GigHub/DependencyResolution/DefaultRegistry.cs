@@ -18,31 +18,39 @@
 using GigHub.Core;
 using GigHub.Core.Repositories;
 
-namespace GigHub.DependencyResolution {
-	using GigHub.Persistance;
-	using GigHub.Persistance.Repositories;
-	using StructureMap;
-	using StructureMap.Configuration.DSL;
-	using StructureMap.Graph;
-	
-	public class DefaultRegistry : Registry {
-		#region Constructors and Destructors
+namespace GigHub.DependencyResolution
+{
+    using GigHub.Core.Models;
+    using GigHub.Persistance;
+    using GigHub.Persistance.Repositories;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.Owin.Security;
+    using StructureMap;
+    using System.Data.Entity;
+    using System.Web;
 
-		public DefaultRegistry() {
-			Scan(
-				scan => {
-					scan.TheCallingAssembly();
-					scan.WithDefaultConventions();
-					scan.With(new ControllerConvention());
-				});
-			For<IUnitOfWork>().Use<UnitOfWork>();
-			For<IGigsRepository>().Use<GigsRepository>();
-			For<IAttendancesRepository>().Use<AttendancesRepository>();
-			For<IFollowingsRepository>().Use<FollowingsRepository>();
-			For<IGenresRepository>().Use<GenresRepository>();
-			//For<IExample>().Use<Example>();
-		}
+    public class DefaultRegistry : Registry {
+        #region Constructors and Destructors
 
-		#endregion
-	}
+        public DefaultRegistry() {
+            Scan(
+                scan => {
+                    scan.TheCallingAssembly();
+                    scan.WithDefaultConventions();
+                    scan.With(new ControllerConvention());
+                });
+            For<IUnitOfWork>().Use<UnitOfWork>();
+            For<IGigsRepository>().Use<GigsRepository>();
+            For<IAttendancesRepository>().Use<AttendancesRepository>();
+            For<IFollowingsRepository>().Use<FollowingsRepository>();
+            For<IGenresRepository>().Use<GenresRepository>();
+            For<IUserStore<ApplicationUser>>().Use<UserStore<ApplicationUser>>();
+            For<DbContext>().Use(() => new ApplicationDbContext());
+            For<IAuthenticationManager>().Use(() => HttpContext.Current.GetOwinContext().Authentication);
+            //For<IExample>().Use<Example>();
+        }
+
+        #endregion
+    }
 }
