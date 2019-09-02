@@ -12,7 +12,7 @@ namespace GigHub.Core.Models
                 "HH:mm", 
                 CultureInfo.CurrentCulture, 
                 DateTimeStyles.None, 
-                out _);
+                out DateTime _);
             return (isValid);
         }
     }
