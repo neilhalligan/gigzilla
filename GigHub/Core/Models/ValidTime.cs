@@ -8,11 +8,12 @@ namespace GigHub.Core.Models
     {
         public override bool IsValid(object value)
         {
+            DateTime datetime;
             var isValid = DateTime.TryParseExact(Convert.ToString(value), 
                 "HH:mm", 
                 CultureInfo.CurrentCulture, 
                 DateTimeStyles.None, 
-                out DateTime _);
+                out datetime);
             return (isValid);
         }
     }
